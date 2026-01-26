@@ -16,6 +16,7 @@ import {
   FolderIcon,
   HomeIcon,
   UsersIcon,
+  ViewColumnsIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 
@@ -39,6 +40,7 @@ function classNames(...classes: (string | boolean | undefined)[]) {
 
 export default function DashboardLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarVisible, setSidebarVisible] = useState(true);
 
   return (
     <>
@@ -157,22 +159,36 @@ export default function DashboardLayout() {
           </div>
         </Dialog>
 
+        {/* Floating toolbar for desktop */}
+        <div
+          className={classNames(
+            "hidden lg:fixed lg:left-3 lg:top-5 lg:z-60 lg:block",
+            "transition-transform duration-300 ease-in-out",
+            sidebarVisible ? "lg:translate-x-59" : "lg:translate-x-0",
+          )}
+        >
+          <button
+            type="button"
+            onClick={() => setSidebarVisible(!sidebarVisible)}
+            className="rounded-xl bg-white/50 p-2.5 shadow-lg backdrop-blur-xl transition-colors hover:bg-white/70 dark:bg-gray-900/50 dark:hover:bg-gray-900/70"
+          >
+            <span className="sr-only">Toggle sidebar</span>
+            <ViewColumnsIcon
+              aria-hidden="true"
+              className="size-5 text-gray-600 dark:text-gray-300"
+            />
+          </button>
+        </div>
+
         {/* Static sidebar for desktop */}
-        <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-[19.5rem] lg:flex-col lg:p-3">
-          {/* Sidebar component, swap this element with another sidebar if you like */}
-          <div className="flex grow flex-col gap-y-5 overflow-y-auto rounded-2xl bg-white/50 px-6 shadow-xl backdrop-blur-xl [background-image:linear-gradient(to_top,_rgb(99_102_241_/_0.04),_transparent_70%)] dark:bg-gray-900/50 dark:[background-image:linear-gradient(to_top,_rgb(129_140_248_/_0.06),_transparent_70%)]">
-            <div className="flex h-16 shrink-0 items-center">
-              <img
-                alt="Your Company"
-                src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
-                className="h-8 w-auto dark:hidden"
-              />
-              <img
-                alt="Your Company"
-                src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
-                className="h-8 w-auto not-dark:hidden"
-              />
-            </div>
+        <div
+          className={classNames(
+            "hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-78 lg:flex-col lg:p-3",
+            "transition-transform duration-300 ease-in-out",
+            !sidebarVisible && "lg:-translate-x-full",
+          )}
+        >
+          <div className="flex grow flex-col gap-y-5 overflow-y-auto rounded-2xl bg-white/50 px-6 pt-14 shadow-xl backdrop-blur-xl [background-image:linear-gradient(to_top,_rgb(99_102_241_/_0.04),_transparent_70%)] dark:bg-gray-900/50 dark:[background-image:linear-gradient(to_top,_rgb(129_140_248_/_0.06),_transparent_70%)]">
             <nav className="flex flex-1 flex-col">
               <ul role="list" className="flex flex-1 flex-col gap-y-7">
                 <li>
@@ -280,7 +296,12 @@ export default function DashboardLayout() {
           </a>
         </div>
 
-        <main className="py-10 lg:pl-78">
+        <main
+          className={classNames(
+            "py-10 transition-[padding-left] duration-300 ease-in-out",
+            sidebarVisible ? "lg:pl-78" : "lg:pl-14",
+          )}
+        >
           <div className="px-4 sm:px-6 lg:px-8">
             <Outlet />
           </div>
