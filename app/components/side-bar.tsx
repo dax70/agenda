@@ -1,33 +1,10 @@
 import { NavLink } from "react-router";
-import {
-  CalendarIcon,
-  ChartPieIcon,
-  DocumentDuplicateIcon,
-  FolderIcon,
-  HomeIcon,
-  UsersIcon,
-  ViewColumnsIcon,
-  XMarkIcon,
-} from "@heroicons/react/24/outline";
+import { ViewColumnsIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import type { NavItem, TeamItem } from "../data/navigation";
 
 function classNames(...classes: (string | boolean | undefined)[]) {
   return classes.filter(Boolean).join(" ");
 }
-
-const navigation = [
-  { name: "Dashboard", href: "/", icon: HomeIcon },
-  { name: "Team", href: "/team", icon: UsersIcon },
-  { name: "Projects", href: "/projects", icon: FolderIcon },
-  { name: "Calendar", href: "/calendar", icon: CalendarIcon },
-  { name: "Documents", href: "/documents", icon: DocumentDuplicateIcon },
-  { name: "Reports", href: "/reports", icon: ChartPieIcon },
-];
-
-const teams = [
-  { id: 1, name: "Heroicons", href: "/teams/heroicons", initial: "H" },
-  { id: 2, name: "Tailwind Labs", href: "/teams/tailwind-labs", initial: "T" },
-  { id: 3, name: "Workcation", href: "/teams/workcation", initial: "W" },
-];
 
 export function ToggleSidebarButton({
   className,
@@ -56,11 +33,15 @@ export function ToggleSidebarButton({
 
 export function SidebarContent({
   className,
+  navigation,
+  teams,
   onNavigate,
   onToggle,
   onClose,
 }: {
   className?: string;
+  navigation: NavItem[];
+  teams: TeamItem[];
   onNavigate?: () => void;
   onToggle?: () => void;
   onClose?: () => void;

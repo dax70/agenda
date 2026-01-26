@@ -3,6 +3,7 @@ import { NavLink, Outlet } from "react-router";
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import { Bars3Icon } from "@heroicons/react/24/outline";
 import { SidebarContent, ToggleSidebarButton } from "../components/side-bar";
+import { navigation, teams } from "../data/navigation";
 
 function classNames(...classes: (string | boolean | undefined)[]) {
   return classes.filter(Boolean).join(" ");
@@ -32,6 +33,8 @@ export default function Layout() {
             >
               <SidebarContent
                 className="rounded-2xl bg-white/90 dark:bg-gray-900/90"
+                navigation={navigation}
+                teams={teams}
                 onNavigate={() => setSidebarOpen(false)}
                 onClose={() => setSidebarOpen(false)}
               />
@@ -62,6 +65,8 @@ export default function Layout() {
         >
           <SidebarContent
             className="rounded-2xl bg-white/50 dark:bg-gray-900/50"
+            navigation={navigation}
+            teams={teams}
             onToggle={() => setSidebarVisible(!sidebarVisible)}
           />
         </div>
