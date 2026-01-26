@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Outlet } from "react-router";
+import { NavLink, Outlet } from "react-router";
 import {
   Dialog,
   DialogBackdrop,
@@ -21,24 +21,24 @@ import {
 } from "@heroicons/react/24/outline";
 
 const navigation = [
-  { name: "Dashboard", href: "#", icon: HomeIcon, current: true },
-  { name: "Team", href: "#", icon: UsersIcon, current: false },
-  { name: "Projects", href: "#", icon: FolderIcon, current: false },
-  { name: "Calendar", href: "#", icon: CalendarIcon, current: false },
-  { name: "Documents", href: "#", icon: DocumentDuplicateIcon, current: false },
-  { name: "Reports", href: "#", icon: ChartPieIcon, current: false },
+  { name: "Dashboard", href: "/", icon: HomeIcon },
+  { name: "Team", href: "/team", icon: UsersIcon },
+  { name: "Projects", href: "/projects", icon: FolderIcon },
+  { name: "Calendar", href: "/calendar", icon: CalendarIcon },
+  { name: "Documents", href: "/documents", icon: DocumentDuplicateIcon },
+  { name: "Reports", href: "/reports", icon: ChartPieIcon },
 ];
 const teams = [
-  { id: 1, name: "Heroicons", href: "#", initial: "H", current: false },
-  { id: 2, name: "Tailwind Labs", href: "#", initial: "T", current: false },
-  { id: 3, name: "Workcation", href: "#", initial: "W", current: false },
+  { id: 1, name: "Heroicons", href: "/teams/heroicons", initial: "H" },
+  { id: 2, name: "Tailwind Labs", href: "/teams/tailwind-labs", initial: "T" },
+  { id: 3, name: "Workcation", href: "/teams/workcation", initial: "W" },
 ];
 
 function classNames(...classes: (string | boolean | undefined)[]) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function DashboardLayout() {
+export default function Layout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [sidebarVisible, setSidebarVisible] = useState(true);
 
@@ -96,26 +96,32 @@ export default function DashboardLayout() {
                       <ul role="list" className="-mx-2 space-y-1">
                         {navigation.map((item) => (
                           <li key={item.name}>
-                            <a
-                              href={item.href}
-                              className={classNames(
-                                item.current
-                                  ? "bg-gray-50 text-indigo-600 dark:bg-white/5 dark:text-white"
-                                  : "text-gray-700 hover:bg-gray-50 hover:text-indigo-600 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-white",
-                                "group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold",
-                              )}
+                            <NavLink
+                              to={item.href}
+                              className={({ isActive }) =>
+                                classNames(
+                                  isActive
+                                    ? "bg-gray-50 text-indigo-600 dark:bg-white/5 dark:text-white"
+                                    : "text-gray-700 hover:bg-gray-50 hover:text-indigo-600 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-white",
+                                  "group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold",
+                                )
+                              }
                             >
-                              <item.icon
-                                aria-hidden="true"
-                                className={classNames(
-                                  item.current
-                                    ? "text-indigo-600 dark:text-white"
-                                    : "text-gray-400 group-hover:text-indigo-600 dark:group-hover:text-white",
-                                  "size-6 shrink-0",
-                                )}
-                              />
-                              {item.name}
-                            </a>
+                              {({ isActive }) => (
+                                <>
+                                  <item.icon
+                                    aria-hidden="true"
+                                    className={classNames(
+                                      isActive
+                                        ? "text-indigo-600 dark:text-white"
+                                        : "text-gray-400 group-hover:text-indigo-600 dark:group-hover:text-white",
+                                      "size-6 shrink-0",
+                                    )}
+                                  />
+                                  {item.name}
+                                </>
+                              )}
+                            </NavLink>
                           </li>
                         ))}
                       </ul>
@@ -127,27 +133,33 @@ export default function DashboardLayout() {
                       <ul role="list" className="-mx-2 mt-2 space-y-1">
                         {teams.map((team) => (
                           <li key={team.name}>
-                            <a
-                              href={team.href}
-                              className={classNames(
-                                team.current
-                                  ? "bg-gray-50 text-indigo-600 dark:bg-white/5 dark:text-white"
-                                  : "text-gray-700 hover:bg-gray-50 hover:text-indigo-600 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-white",
-                                "group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold",
-                              )}
+                            <NavLink
+                              to={team.href}
+                              className={({ isActive }) =>
+                                classNames(
+                                  isActive
+                                    ? "bg-gray-50 text-indigo-600 dark:bg-white/5 dark:text-white"
+                                    : "text-gray-700 hover:bg-gray-50 hover:text-indigo-600 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-white",
+                                  "group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold",
+                                )
+                              }
                             >
-                              <span
-                                className={classNames(
-                                  team.current
-                                    ? "border-indigo-600 text-indigo-600 dark:border-white/20 dark:text-white"
-                                    : "border-gray-200 text-gray-400 group-hover:border-indigo-600 group-hover:text-indigo-600 dark:border-white/10 dark:group-hover:border-white/20 dark:group-hover:text-white",
-                                  "flex size-6 shrink-0 items-center justify-center rounded-lg border bg-white text-[0.625rem] font-medium dark:bg-white/5",
-                                )}
-                              >
-                                {team.initial}
-                              </span>
-                              <span className="truncate">{team.name}</span>
-                            </a>
+                              {({ isActive }) => (
+                                <>
+                                  <span
+                                    className={classNames(
+                                      isActive
+                                        ? "border-indigo-600 text-indigo-600 dark:border-white/20 dark:text-white"
+                                        : "border-gray-200 text-gray-400 group-hover:border-indigo-600 group-hover:text-indigo-600 dark:border-white/10 dark:group-hover:border-white/20 dark:group-hover:text-white",
+                                      "flex size-6 shrink-0 items-center justify-center rounded-lg border bg-white text-[0.625rem] font-medium dark:bg-white/5",
+                                    )}
+                                  >
+                                    {team.initial}
+                                  </span>
+                                  <span className="truncate">{team.name}</span>
+                                </>
+                              )}
+                            </NavLink>
                           </li>
                         ))}
                       </ul>
@@ -203,26 +215,32 @@ export default function DashboardLayout() {
                       <ul role="list" className="-mx-2 space-y-1">
                         {navigation.map((item) => (
                           <li key={item.name}>
-                            <a
-                              href={item.href}
-                              className={classNames(
-                                item.current
-                                  ? "bg-gray-50 text-indigo-600 dark:bg-white/5 dark:text-white"
-                                  : "text-gray-700 hover:bg-gray-50 hover:text-indigo-600 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-white",
-                                "group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold",
-                              )}
+                            <NavLink
+                              to={item.href}
+                              className={({ isActive }) =>
+                                classNames(
+                                  isActive
+                                    ? "bg-gray-50 text-indigo-600 dark:bg-white/5 dark:text-white"
+                                    : "text-gray-700 hover:bg-gray-50 hover:text-indigo-600 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-white",
+                                  "group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold",
+                                )
+                              }
                             >
-                              <item.icon
-                                aria-hidden="true"
-                                className={classNames(
-                                  item.current
-                                    ? "text-indigo-600 dark:text-white"
-                                    : "text-gray-400 group-hover:text-indigo-600 dark:group-hover:text-white",
-                                  "size-6 shrink-0",
-                                )}
-                              />
-                              {item.name}
-                            </a>
+                              {({ isActive }) => (
+                                <>
+                                  <item.icon
+                                    aria-hidden="true"
+                                    className={classNames(
+                                      isActive
+                                        ? "text-indigo-600 dark:text-white"
+                                        : "text-gray-400 group-hover:text-indigo-600 dark:group-hover:text-white",
+                                      "size-6 shrink-0",
+                                    )}
+                                  />
+                                  {item.name}
+                                </>
+                              )}
+                            </NavLink>
                           </li>
                         ))}
                       </ul>
@@ -234,27 +252,33 @@ export default function DashboardLayout() {
                       <ul role="list" className="-mx-2 mt-2 space-y-1">
                         {teams.map((team) => (
                           <li key={team.name}>
-                            <a
-                              href={team.href}
-                              className={classNames(
-                                team.current
-                                  ? "bg-gray-50 text-indigo-600 dark:bg-white/5 dark:text-white"
-                                  : "text-gray-700 hover:bg-gray-50 hover:text-indigo-600 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-white",
-                                "group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold",
-                              )}
+                            <NavLink
+                              to={team.href}
+                              className={({ isActive }) =>
+                                classNames(
+                                  isActive
+                                    ? "bg-gray-50 text-indigo-600 dark:bg-white/5 dark:text-white"
+                                    : "text-gray-700 hover:bg-gray-50 hover:text-indigo-600 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-white",
+                                  "group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold",
+                                )
+                              }
                             >
-                              <span
-                                className={classNames(
-                                  team.current
-                                    ? "border-indigo-600 text-indigo-600 dark:border-white/20 dark:text-white"
-                                    : "border-gray-200 text-gray-400 group-hover:border-indigo-600 group-hover:text-indigo-600 dark:border-white/10 dark:group-hover:border-white/20 dark:group-hover:text-white",
-                                  "flex size-6 shrink-0 items-center justify-center rounded-lg border bg-white text-[0.625rem] font-medium dark:bg-white/5",
-                                )}
-                              >
-                                {team.initial}
-                              </span>
-                              <span className="truncate">{team.name}</span>
-                            </a>
+                              {({ isActive }) => (
+                                <>
+                                  <span
+                                    className={classNames(
+                                      isActive
+                                        ? "border-indigo-600 text-indigo-600 dark:border-white/20 dark:text-white"
+                                        : "border-gray-200 text-gray-400 group-hover:border-indigo-600 group-hover:text-indigo-600 dark:border-white/10 dark:group-hover:border-white/20 dark:group-hover:text-white",
+                                      "flex size-6 shrink-0 items-center justify-center rounded-lg border bg-white text-[0.625rem] font-medium dark:bg-white/5",
+                                    )}
+                                  >
+                                    {team.initial}
+                                  </span>
+                                  <span className="truncate">{team.name}</span>
+                                </>
+                              )}
+                            </NavLink>
                           </li>
                         ))}
                       </ul>
@@ -262,8 +286,8 @@ export default function DashboardLayout() {
                   </ul>
                 </li>
                 <li className="-mx-6 mt-auto">
-                  <a
-                    href="#"
+                  <NavLink
+                    to="/profile"
                     className="flex items-center gap-x-4 px-6 py-3 text-sm/6 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-white/5"
                   >
                     <img
@@ -273,7 +297,7 @@ export default function DashboardLayout() {
                     />
                     <span className="sr-only">Your profile</span>
                     <span aria-hidden="true">Tom Cook</span>
-                  </a>
+                  </NavLink>
                 </li>
               </ul>
             </nav>
@@ -292,14 +316,14 @@ export default function DashboardLayout() {
           <div className="flex-1 text-sm/6 font-semibold text-gray-900 dark:text-white">
             Dashboard
           </div>
-          <a href="#">
+          <NavLink to="/profile">
             <span className="sr-only">Your profile</span>
             <img
               alt=""
               src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
               className="size-8 rounded-full bg-gray-50 outline -outline-offset-1 outline-black/5 dark:bg-gray-800 dark:outline-white/10"
             />
-          </a>
+          </NavLink>
         </div>
 
         <main
