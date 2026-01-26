@@ -159,17 +159,23 @@ export default function DashboardLayout() {
           </div>
         </Dialog>
 
-        {/* Floating toolbar for desktop */}
+        {/* Floating toolbar */}
         <div
           className={classNames(
-            "hidden lg:fixed lg:left-3 lg:top-5 lg:z-60 lg:block",
+            "hidden sm:fixed sm:left-3 sm:top-5 sm:z-60 sm:block",
             "transition-transform duration-300 ease-in-out",
             sidebarVisible ? "lg:translate-x-59" : "lg:translate-x-0",
           )}
         >
           <button
             type="button"
-            onClick={() => setSidebarVisible(!sidebarVisible)}
+            onClick={() => {
+              if (window.matchMedia("(min-width: 1024px)").matches) {
+                setSidebarVisible(!sidebarVisible);
+              } else {
+                setSidebarOpen(true);
+              }
+            }}
             className="rounded-xl bg-white/50 p-2.5 shadow-lg backdrop-blur-xl transition-colors hover:bg-white/70 dark:bg-gray-900/50 dark:hover:bg-gray-900/70"
           >
             <span className="sr-only">Toggle sidebar</span>
@@ -274,11 +280,11 @@ export default function DashboardLayout() {
           </div>
         </div>
 
-        <div className="sticky top-0 z-40 flex items-center gap-x-6 bg-white/50 px-4 py-4 shadow-xs backdrop-blur-xl sm:px-6 lg:hidden dark:bg-gray-900/50">
+        <div className="sticky top-0 z-40 flex items-center gap-x-6 bg-white/50 px-4 py-4 shadow-xs backdrop-blur-xl sm:hidden dark:bg-gray-900/50">
           <button
             type="button"
             onClick={() => setSidebarOpen(true)}
-            className="-m-2.5 p-2.5 text-gray-700 hover:text-gray-900 lg:hidden dark:text-gray-400 dark:hover:text-white"
+            className="-m-2.5 p-2.5 text-gray-700 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
           >
             <span className="sr-only">Open sidebar</span>
             <Bars3Icon aria-hidden="true" className="size-6" />
@@ -298,7 +304,7 @@ export default function DashboardLayout() {
 
         <main
           className={classNames(
-            "py-10 transition-[padding-left] duration-300 ease-in-out",
+            "py-10 sm:pl-14 transition-[padding-left] duration-300 ease-in-out",
             sidebarVisible ? "lg:pl-78" : "lg:pl-14",
           )}
         >
