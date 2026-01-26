@@ -7,6 +7,7 @@ import {
   HomeIcon,
   UsersIcon,
   ViewColumnsIcon,
+  XMarkIcon,
 } from "@heroicons/react/24/outline";
 
 function classNames(...classes: (string | boolean | undefined)[]) {
@@ -40,7 +41,7 @@ export function ToggleSidebarButton({
       type="button"
       onClick={onClick}
       className={classNames(
-        "rounded-xl bg-white/50 p-2.5 shadow-lg backdrop-blur-xl transition-colors hover:bg-white/70 dark:bg-gray-900/50 dark:hover:bg-gray-900/70",
+        "rounded-2xl bg-white/50 p-2.5 shadow-lg backdrop-blur-xl transition-colors hover:bg-white/70 dark:bg-gray-900/50 dark:hover:bg-gray-900/70",
         className,
       )}
     >
@@ -57,10 +58,12 @@ export function SidebarContent({
   className,
   onNavigate,
   onToggle,
+  onClose,
 }: {
   className?: string;
   onNavigate?: () => void;
   onToggle?: () => void;
+  onClose?: () => void;
 }) {
   return (
     <div
@@ -69,50 +72,62 @@ export function SidebarContent({
         className,
       )}
     >
+      {onToggle && (
+        <div className="flex justify-end -mr-2">
+          <ToggleSidebarButton onClick={onToggle} />
+        </div>
+      )}
+      {onClose && (
+        <div className="flex justify-end -mr-2">
+          <button
+            type="button"
+            onClick={onClose}
+            className="rounded-2xl bg-white/50 p-2.5 shadow-lg backdrop-blur-xl transition-colors hover:bg-white/70 dark:bg-gray-900/50 dark:hover:bg-gray-900/70"
+          >
+            <span className="sr-only">Close sidebar</span>
+            <XMarkIcon
+              aria-hidden="true"
+              className="size-5 text-gray-600 dark:text-gray-300"
+            />
+          </button>
+        </div>
+      )}
       <nav className="flex flex-1 flex-col">
         <ul role="list" className="flex flex-1 flex-col gap-y-7">
           <li>
-            <div className="flex items-start">
-              <ul role="list" className="-mx-2 flex-1 space-y-1">
-                {navigation.map((item) => (
-                  <li key={item.name}>
-                    <NavLink
-                      to={item.href}
-                      onClick={onNavigate}
-                      className={({ isActive }) =>
-                        classNames(
-                          isActive
-                            ? "bg-gray-50 text-indigo-600 dark:bg-white/5 dark:text-white"
-                            : "text-gray-700 hover:bg-gray-50 hover:text-indigo-600 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-white",
-                          "group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold",
-                        )
-                      }
-                    >
-                      {({ isActive }) => (
-                        <>
-                          <item.icon
-                            aria-hidden="true"
-                            className={classNames(
-                              isActive
-                                ? "text-indigo-600 dark:text-white"
-                                : "text-gray-400 group-hover:text-indigo-600 dark:group-hover:text-white",
-                              "size-6 shrink-0",
-                            )}
-                          />
-                          {item.name}
-                        </>
-                      )}
-                    </NavLink>
-                  </li>
-                ))}
-              </ul>
-              {onToggle && (
-                <ToggleSidebarButton
-                  onClick={onToggle}
-                  className="-mr-2 shrink-0"
-                />
-              )}
-            </div>
+            <ul role="list" className="-mx-2 space-y-1">
+              {navigation.map((item) => (
+                <li key={item.name}>
+                  <NavLink
+                    to={item.href}
+                    onClick={onNavigate}
+                    className={({ isActive }) =>
+                      classNames(
+                        isActive
+                          ? "bg-indigo-600 text-white dark:bg-indigo-500"
+                          : "text-gray-700 hover:bg-gray-50 hover:text-indigo-600 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-white",
+                        "group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold",
+                      )
+                    }
+                  >
+                    {({ isActive }) => (
+                      <>
+                        <item.icon
+                          aria-hidden="true"
+                          className={classNames(
+                            isActive
+                              ? "text-white"
+                              : "text-gray-400 group-hover:text-indigo-600 dark:group-hover:text-white",
+                            "size-6 shrink-0",
+                          )}
+                        />
+                        {item.name}
+                      </>
+                    )}
+                  </NavLink>
+                </li>
+              ))}
+            </ul>
           </li>
           <li>
             <div className="text-xs/6 font-semibold text-gray-400">
@@ -127,7 +142,7 @@ export function SidebarContent({
                     className={({ isActive }) =>
                       classNames(
                         isActive
-                          ? "bg-gray-50 text-indigo-600 dark:bg-white/5 dark:text-white"
+                          ? "bg-indigo-600 text-white dark:bg-indigo-500"
                           : "text-gray-700 hover:bg-gray-50 hover:text-indigo-600 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-white",
                         "group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold",
                       )
@@ -138,9 +153,9 @@ export function SidebarContent({
                         <span
                           className={classNames(
                             isActive
-                              ? "border-indigo-600 text-indigo-600 dark:border-white/20 dark:text-white"
-                              : "border-gray-200 text-gray-400 group-hover:border-indigo-600 group-hover:text-indigo-600 dark:border-white/10 dark:group-hover:border-white/20 dark:group-hover:text-white",
-                            "flex size-6 shrink-0 items-center justify-center rounded-lg border bg-white text-[0.625rem] font-medium dark:bg-white/5",
+                              ? "border-white/20 text-white bg-white/10"
+                              : "border-gray-200 bg-white text-gray-400 group-hover:border-indigo-600 group-hover:text-indigo-600 dark:border-white/10 dark:bg-white/5 dark:group-hover:border-white/20 dark:group-hover:text-white",
+                            "flex size-6 shrink-0 items-center justify-center rounded-lg border text-[0.625rem] font-medium",
                           )}
                         >
                           {team.initial}

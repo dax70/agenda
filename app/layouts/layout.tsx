@@ -1,12 +1,7 @@
 import { useState } from "react";
 import { NavLink, Outlet } from "react-router";
-import {
-  Dialog,
-  DialogBackdrop,
-  DialogPanel,
-  TransitionChild,
-} from "@headlessui/react";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
+import { Bars3Icon } from "@heroicons/react/24/outline";
 import { SidebarContent, ToggleSidebarButton } from "../components/side-bar";
 
 function classNames(...classes: (string | boolean | undefined)[]) {
@@ -33,27 +28,12 @@ export default function Layout() {
           <div className="fixed inset-0 flex p-3">
             <DialogPanel
               transition
-              className="relative mr-16 flex w-full max-w-xs flex-1 transform transition duration-300 ease-in-out data-closed:-translate-x-full"
+              className="flex w-full max-w-xs flex-1 transform transition duration-300 ease-in-out data-closed:-translate-x-full"
             >
-              <TransitionChild>
-                <div className="absolute top-0 left-full flex w-16 justify-center pt-5 duration-300 ease-in-out data-closed:opacity-0">
-                  <button
-                    type="button"
-                    onClick={() => setSidebarOpen(false)}
-                    className="-m-2.5 p-2.5"
-                  >
-                    <span className="sr-only">Close sidebar</span>
-                    <XMarkIcon
-                      aria-hidden="true"
-                      className="size-6 text-white"
-                    />
-                  </button>
-                </div>
-              </TransitionChild>
-
               <SidebarContent
                 className="rounded-2xl bg-white/90 dark:bg-gray-900/90"
                 onNavigate={() => setSidebarOpen(false)}
+                onClose={() => setSidebarOpen(false)}
               />
             </DialogPanel>
           </div>
