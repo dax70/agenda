@@ -1,13 +1,10 @@
 import { useState } from "react";
 import { NavLink, Outlet } from "react-router";
-import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
+import { Dialog, Modal, ModalOverlay } from "react-aria-components";
 import { Bars3Icon } from "@heroicons/react/24/outline";
 import { SidebarContent, ToggleSidebarButton } from "../components/side-bar";
 import { navigation, teams } from "../data/navigation";
-
-function classNames(...classes: (string | boolean | undefined)[]) {
-  return classes.filter(Boolean).join(" ");
-}
+import { cn } from "../lib/utils";
 
 export default function Layout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -16,31 +13,26 @@ export default function Layout() {
   return (
     <>
       <div>
-        <Dialog
-          open={sidebarOpen}
-          onClose={setSidebarOpen}
-          className="relative z-50 lg:hidden"
+        <ModalOverlay
+          isOpen={sidebarOpen}
+          onOpenChange={setSidebarOpen}
+          isDismissable
+          className="fixed inset-0 z-50 bg-gray-900/80 transition-opacity duration-300 ease-linear entering:opacity-0 exiting:opacity-0 lg:hidden"
         >
-          <DialogBackdrop
-            transition
-            className="fixed inset-0 bg-gray-900/80 transition-opacity duration-300 ease-linear data-closed:opacity-0"
-          />
-
           <div className="fixed inset-0 flex p-3">
-            <DialogPanel
-              transition
-              className="flex w-full max-w-xs flex-1 transform transition duration-300 ease-in-out data-closed:-translate-x-full"
-            >
-              <SidebarContent
-                className="rounded-2xl bg-white/90 dark:bg-gray-900/90"
-                navigation={navigation}
-                teams={teams}
-                onNavigate={() => setSidebarOpen(false)}
-                onClose={() => setSidebarOpen(false)}
-              />
-            </DialogPanel>
+            <Modal className="flex w-full max-w-xs flex-1 transform transition duration-300 ease-in-out entering:-translate-x-full exiting:-translate-x-full">
+              <Dialog className="flex flex-1 outline-none">
+                <SidebarContent
+                  className="rounded-2xl bg-white/90 dark:bg-gray-900/90"
+                  navigation={navigation}
+                  teams={teams}
+                  onNavigate={() => setSidebarOpen(false)}
+                  onClose={() => setSidebarOpen(false)}
+                />
+              </Dialog>
+            </Modal>
           </div>
-        </Dialog>
+        </ModalOverlay>
 
         {/* Floating toolbar — visible on tablet (sm–lg) always, on desktop only when sidebar is collapsed (sits behind sidebar at lower z-index) */}
         <div className="hidden sm:fixed sm:left-3 sm:top-5 sm:z-60 sm:block lg:z-40">
@@ -57,7 +49,7 @@ export default function Layout() {
 
         {/* Static sidebar for desktop */}
         <div
-          className={classNames(
+          className={cn(
             "hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-78 lg:flex-col lg:p-3",
             "transition-transform duration-300 ease-in-out",
             !sidebarVisible && "lg:-translate-x-full",
@@ -94,7 +86,7 @@ export default function Layout() {
         </div>
 
         <main
-          className={classNames(
+          className={cn(
             "py-10 sm:pl-14 transition-[padding-left] duration-300 ease-in-out",
             sidebarVisible ? "lg:pl-78" : "lg:pl-14",
           )}

@@ -1,10 +1,7 @@
 import { NavLink } from "react-router";
 import { ViewColumnsIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import type { NavItem, TeamItem } from "../data/navigation";
-
-function classNames(...classes: (string | boolean | undefined)[]) {
-  return classes.filter(Boolean).join(" ");
-}
+import { cn } from "../lib/utils";
 
 export function ToggleSidebarButton({
   className,
@@ -17,7 +14,7 @@ export function ToggleSidebarButton({
     <button
       type="button"
       onClick={onClick}
-      className={classNames(
+      className={cn(
         "rounded-2xl bg-white/50 p-2.5 shadow-lg backdrop-blur-xl transition-colors hover:bg-white/70 dark:bg-gray-900/50 dark:hover:bg-gray-900/70",
         className,
       )}
@@ -48,7 +45,7 @@ export function SidebarContent({
 }) {
   return (
     <div
-      className={classNames(
+      className={cn(
         "flex grow flex-col gap-y-5 overflow-y-auto px-6 pt-4 shadow-xl backdrop-blur-xl [background-image:linear-gradient(to_top,_rgb(99_102_241_/_0.04),_transparent_70%)] dark:[background-image:linear-gradient(to_top,_rgb(129_140_248_/_0.06),_transparent_70%)]",
         className,
       )}
@@ -83,7 +80,7 @@ export function SidebarContent({
                     to={item.href}
                     onClick={onNavigate}
                     className={({ isActive }) =>
-                      classNames(
+                      cn(
                         isActive
                           ? "bg-indigo-600 text-white dark:bg-indigo-500"
                           : "text-gray-700 hover:bg-gray-50 hover:text-indigo-600 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-white",
@@ -95,7 +92,7 @@ export function SidebarContent({
                       <>
                         <item.icon
                           aria-hidden="true"
-                          className={classNames(
+                          className={cn(
                             isActive
                               ? "text-white"
                               : "text-gray-400 group-hover:text-indigo-600 dark:group-hover:text-white",
@@ -121,7 +118,7 @@ export function SidebarContent({
                     to={team.href}
                     onClick={onNavigate}
                     className={({ isActive }) =>
-                      classNames(
+                      cn(
                         isActive
                           ? "bg-indigo-600 text-white dark:bg-indigo-500"
                           : "text-gray-700 hover:bg-gray-50 hover:text-indigo-600 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-white",
@@ -132,7 +129,7 @@ export function SidebarContent({
                     {({ isActive }) => (
                       <>
                         <span
-                          className={classNames(
+                          className={cn(
                             isActive
                               ? "border-white/20 text-white bg-white/10"
                               : "border-gray-200 bg-white text-gray-400 group-hover:border-indigo-600 group-hover:text-indigo-600 dark:border-white/10 dark:bg-white/5 dark:group-hover:border-white/20 dark:group-hover:text-white",
