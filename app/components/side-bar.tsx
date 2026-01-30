@@ -46,7 +46,7 @@ export function SidebarContent({
   return (
     <div
       className={cn(
-        "flex grow flex-col gap-y-5 overflow-y-auto px-6 pt-4 shadow-xl backdrop-blur-xl [background-image:linear-gradient(to_top,_rgb(99_102_241_/_0.04),_transparent_70%)] dark:[background-image:linear-gradient(to_top,_rgb(129_140_248_/_0.06),_transparent_70%)]",
+        "flex grow flex-col gap-y-5 overflow-y-auto px-6 pt-4 shadow-xl backdrop-blur-xl [background-image:linear-gradient(to_top,_rgb(99_102_241_/_0.08),_transparent_70%)] dark:[background-image:linear-gradient(to_top,_rgb(129_140_248_/_0.10),_transparent_70%)]",
         className,
       )}
     >
@@ -83,7 +83,7 @@ export function SidebarContent({
                       cn(
                         isActive
                           ? "bg-indigo-600 text-white dark:bg-indigo-500"
-                          : "text-gray-700 hover:bg-gray-50 hover:text-indigo-600 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-white",
+                          : "text-gray-700 hover:bg-white/60 hover:text-indigo-600 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-white",
                         "group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold",
                       )
                     }
@@ -121,7 +121,7 @@ export function SidebarContent({
                       cn(
                         isActive
                           ? "bg-indigo-600 text-white dark:bg-indigo-500"
-                          : "text-gray-700 hover:bg-gray-50 hover:text-indigo-600 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-white",
+                          : "text-gray-700 hover:bg-white/60 hover:text-indigo-600 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-white",
                         "group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold",
                       )
                     }
@@ -150,7 +150,7 @@ export function SidebarContent({
             <NavLink
               to="/profile"
               onClick={onNavigate}
-              className="flex items-center gap-x-4 px-6 py-3 text-sm/6 font-semibold text-gray-900 hover:bg-gray-50 dark:text-white dark:hover:bg-white/5"
+              className="flex items-center gap-x-4 px-6 py-3 text-sm/6 font-semibold text-gray-900 hover:bg-white/60 dark:text-white dark:hover:bg-white/5"
             >
               <img
                 alt=""

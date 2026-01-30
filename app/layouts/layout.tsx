@@ -23,7 +23,7 @@ export default function Layout() {
             <Modal className="flex w-full max-w-xs flex-1 transform transition duration-300 ease-in-out entering:-translate-x-full exiting:-translate-x-full">
               <Dialog className="flex flex-1 outline-none">
                 <SidebarContent
-                  className="rounded-2xl bg-white/90 dark:bg-gray-900/90"
+                  className="rounded-2xl bg-gray-100/80 ring-1 ring-black/5 inset-ring inset-ring-white/50 dark:bg-gray-950/80 dark:ring-white/10 dark:inset-ring-white/10"
                   navigation={navigation}
                   teams={teams}
                   onNavigate={() => setSidebarOpen(false)}
@@ -56,7 +56,7 @@ export default function Layout() {
           )}
         >
           <SidebarContent
-            className="rounded-2xl bg-white/50 dark:bg-gray-900/50"
+            className="rounded-2xl bg-gray-100/80 ring-1 ring-black/5 inset-ring inset-ring-white/50 dark:bg-gray-950/80 dark:ring-white/10 dark:inset-ring-white/10"
             navigation={navigation}
             teams={teams}
             onToggle={() => setSidebarVisible(!sidebarVisible)}
@@ -87,13 +87,11 @@ export default function Layout() {
 
         <main
           className={cn(
-            "py-10 sm:pl-14 transition-[padding-left] duration-300 ease-in-out",
-            sidebarVisible ? "lg:pl-78" : "lg:pl-14",
+            "sm:pl-14 transition-[padding-left] duration-300 ease-in-out",
+            sidebarVisible ? "lg:pl-75" : "lg:pl-0",
           )}
         >
-          <div className="px-4 sm:px-6 lg:px-8">
-            <Outlet />
-          </div>
+          <Outlet context={{ sidebarVisible }} />
         </main>
       </div>
     </>

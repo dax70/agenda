@@ -1,6 +1,8 @@
+import { PageContainer } from "~/components/page-container";
+
 export default function Profile() {
 	return (
-		<div>
+		<PageContainer>
 			<div className="flex items-center gap-x-4">
 				<img
 					alt=""
@@ -16,6 +18,6 @@ export default function Profile() {
 					</p>
 				</div>
 			</div>
-		</div>
+		</PageContainer>
 	);
 }
